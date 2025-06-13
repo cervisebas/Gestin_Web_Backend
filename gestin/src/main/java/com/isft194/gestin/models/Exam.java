@@ -13,32 +13,16 @@ import java.util.Date;
 public class Exam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long examId;
+    private Long id;
 
-    @Column(name = "examDate")
-    private Date examDate;
+    private LocalDateTime date;
 
-    @Column(name = "examTime")
-    private LocalDateTime examTime;
-
-    @OneToOne
-    @JoinColumn(name = "teacher_id")
+    @ManyToOne
+    @JoinColumn(name = "id_teacher")
     private User teacher;
 
-    @OneToOne
-    @JoinColumn(name = "fistVocal_id")
-    private User firstVocal;
-
-    @OneToOne
-    @JoinColumn(name = "secondVocal_id")
-    private User secondVocal;
-
-    @OneToOne
-    @JoinColumn(name = "thirdVocal_id")
-    private User thirdVocal;
-
-    @OneToOne
-    @JoinColumn(name = "subject_id")
+    @ManyToOne
+    @JoinColumn(name = "id_subject")
     private Subject subject;
 
 }
