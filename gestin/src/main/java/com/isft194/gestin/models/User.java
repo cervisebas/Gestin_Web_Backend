@@ -21,28 +21,34 @@ public class User implements UserDetails
     //valor que se asocia al user de gestin
     @Column(name="gestinId")
     private Long gestinId;
-    @Column(name="type")
-    private String type;
-    @Column(name="mail")
-    private String mail;
-    @Column(name="name")
+    @Column(name="is_teacher")
+    private Boolean isTeacher;
+
+    private String email;
+
     private String name;
-    @Column(name="lastName")
+
     private String lastName;
-    @Column(name="password")
+
     private String password;
-    @Column(name="identityDoc")
-    private String identityDoc;
-    @Column(name="phone")
-    private Long phoneNumber;
-    @Column(name="emergencyPhoneNum")
-    private Long emergencyPhoneNumber;
-    @Column(name="birthdate")
+
+    private Integer dni;
+
+    private Long phone;
+
+    @Column(name="emergency_phone")
+    private Long emergencyPhone;
+
     private Date birthdate;
-    @Column(name="placeOfBirth")
-    private String placeOfBirth;
-    @Column(name="gender")
-    private String gender;
+
+    private String birthplace;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    public enum Gender{
+        MALE,FEMALE,OTHER
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -51,7 +57,7 @@ public class User implements UserDetails
 
     @Override
     public String getUsername() {
-        return mail;
+        return email;
     }
 
     @Override
