@@ -11,26 +11,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Entity
-@Table(name = "registration_periods")
+@Table(name = "registration_statuses")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegistrationPeriod {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class RegistrationStatuses {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(name = "start_date")
-    private LocalDateTime startDate;
+  private String name;
 
-    @Column(name = "end_date")
-    private LocalDateTime endDate;
+  @Column(name = "enable_exams")
+  private String enableExams;
 
-    @Column(name = "its_for_exams")
-    private Boolean itsForExams;
-
+  @Column(name = "enable_subject")
+  private String enableSubject;
 }

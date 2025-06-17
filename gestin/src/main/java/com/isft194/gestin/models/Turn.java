@@ -11,26 +11,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Entity
-@Table(name = "registration_periods")
+@Table(name = "careers")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegistrationPeriod {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "start_date")
-    private LocalDateTime startDate;
-
-    @Column(name = "end_date")
-    private LocalDateTime endDate;
-
-    @Column(name = "its_for_exams")
-    private Boolean itsForExams;
-
+public class Turn {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+  
+  @Column(name = "hours_start")
+  private String hours_start;  
+  
+  @Column(name = "hours_end")
+  private String hours_end;
 }

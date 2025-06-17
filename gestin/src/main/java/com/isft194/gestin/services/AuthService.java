@@ -22,7 +22,10 @@ public class AuthService {
     public AuthResponse login(LoginRequest request) {
         // Autenticamos al usuario utilizando el AuthenticationManager.
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getMail(), request.getPassword())
+            new UsernamePasswordAuthenticationToken(
+                request.getMail(),
+                request.getPassword()
+            )
         );
 
         // Recuperamos el usuario a partir de su correo.
