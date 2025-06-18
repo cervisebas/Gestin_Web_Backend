@@ -4,6 +4,7 @@ import com.isft194.gestin.dtos.request.EnrolmentExamRequest;
 import com.isft194.gestin.dtos.request.ExamRequest;
 import com.isft194.gestin.dtos.response.EnrolmentExamResponse;
 import com.isft194.gestin.dtos.response.EnrolmentExamsResponse;
+import com.isft194.gestin.interfaces.IMapper;
 import com.isft194.gestin.models.EnrolmentExam;
 import com.isft194.gestin.models.Exam;
 import com.isft194.gestin.models.User;
@@ -72,7 +73,7 @@ public class EnrolmentExamMapper implements IMapper<EnrolmentExam,EnrolmentExamR
         }
 
     @Override
-    public EnrolmentExam fromRequestToObj(EnrolmentExamRequest request) throws Exception {
+    public EnrolmentExam fromRequestToModel(EnrolmentExamRequest request) throws Exception {
         User student = userService.findUserByMail(request.getStudent().getMail());
 
         EnrolmentExam enrolmentExam = EnrolmentExam.builder()

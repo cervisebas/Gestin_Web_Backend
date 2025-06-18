@@ -1,90 +1,44 @@
 package com.isft194.gestin.mappers;
 
 import com.isft194.gestin.dtos.request.CareerRequest;
-import com.isft194.gestin.dtos.request.SubjectRequest;
 import com.isft194.gestin.dtos.response.CareerResponse;
-import com.isft194.gestin.dtos.response.SubjectResponse;
-import com.isft194.gestin.dtos.response.SubjectsResponse;
+import com.isft194.gestin.interfaces.IArrayMapper;
+import com.isft194.gestin.interfaces.IMapper;
 import com.isft194.gestin.models.Career;
-import com.isft194.gestin.models.Subject;
+
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-
 @Service
-public class CareerMapper implements IMapper<Career,CareerRequest,CareerResponse>
-{
+public class CareerMapper
+    implements
+        IMapper<Career, CareerRequest, CareerResponse>,
+        IArrayMapper<Career, CareerRequest, CareerResponse> {
 
     @Autowired
     private ModelMapper modelMapper;
 
-    @Autowired
-    private SubjectMapper subjectMapper;
-
-    public Career toCareer(CareerRequest careerRequest){
-        // Map basic attributes from CareerRequest to Career
-        Career career = modelMapper.map(careerRequest, Career.class);
-
-        // Initialize the subjects list as an empty list
-        career.setSubjects(new ArrayList<>());
-
-        // Iterate over the list of SubjectRequest and map each one to Subject
-        for (SubjectRequest subjectRequest : careerRequest.getSubjectsRequest()){
-            Subject subject = subjectMapper.toSubject(subjectRequest);
-            career.getSubjects().add(subject);
-        }
-        return career;
-    }
-
-    public CareerResponse toCareerResponse(Career career){
-
-        // Map basic attributes from Career to CareerResponse
-        CareerResponse careerResponse = modelMapper.map(career, CareerResponse.class);
-
-        // Initialize SubjectsResponse to hold the list of SubjectResponse
-        SubjectsResponse subjectsResponse = new SubjectsResponse(new ArrayList<>());
-
-        // Iterate over the list of Subject and map each one to SubjectResponse
-        for(Subject subject : career.getSubjects()){
-            SubjectResponse subjectResponse = subjectMapper.toSubjectResponse(subject);
-            subjectsResponse.getSubjects().add(subjectResponse);
-        }
-        careerResponse.setSubjectsResponse(subjectsResponse);
-        return careerResponse;
+    @Override
+    public Career fromRequestToModel(CareerRequest request) {
+        return modelMapper.map(request, Career.class);
     }
 
     @Override
-    public Career fromRequestToObj(CareerRequest request) throws Exception {
-        // Map basic attributes from CareerRequest to Career
-        Career career = modelMapper.map(request, Career.class);
-
-        // Initialize the subjects list as an empty list
-        career.setSubjects(new ArrayList<>());
-
-        // Iterate over the list of SubjectRequest and map each one to Subject
-        for (SubjectRequest subjectRequest : request.getSubjectsRequest()){
-            Subject subject = subjectMapper.toSubject(subjectRequest);
-            career.getSubjects().add(subject);
-        }
-        return career;
+    public CareerResponse fromModelToResponse(Career model) {
+        return modelMapper.map(model, CareerResponse.class);
     }
 
     @Override
-    public CareerResponse fromObjToResponse(Career career) {
-        // Map basic attributes from Career to CareerResponse
-        CareerResponse careerResponse = modelMapper.map(career, CareerResponse.class);
+    public List<Career> fromRequestListToModelList(List<CareerRequest> request) {
+        return modelMapper.map(request, new TypeToken<List<Career>>() {}.getType());
+    }
 
-        // Initialize SubjectsResponse to hold the list of SubjectResponse
-        SubjectsResponse subjectsResponse = new SubjectsResponse(new ArrayList<>());
-
-        // Iterate over the list of Subject and map each one to SubjectResponse
-        for(Subject subject : career.getSubjects()){
-            SubjectResponse subjectResponse = subjectMapper.toSubjectResponse(subject);
-            subjectsResponse.getSubjects().add(subjectResponse);
-        }
-        careerResponse.setSubjectsResponse(subjectsResponse);
-        return careerResponse;
+    @Override
+    public List<CareerResponse> fromModelListToResponseList(List<Career> model) {
+        return modelMapper.map(model, new TypeToken<List<Career>>() {}.getType());
     }
 }

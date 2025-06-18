@@ -16,8 +16,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "academic_records")
-@Builder
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class AcademicRecord {

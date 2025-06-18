@@ -2,6 +2,8 @@ package com.isft194.gestin.models;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.isft194.gestin.enums.Gender;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -60,13 +62,6 @@ public class User implements UserDetails {
 
     @Column(name="emergency_phone")
     private String emergencyPhone;
-
-    public enum Gender {
-        MALE,
-        FEMALE,
-        OTHER
-    }
-
 
 
     @Override

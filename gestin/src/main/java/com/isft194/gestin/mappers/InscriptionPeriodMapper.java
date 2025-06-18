@@ -5,6 +5,7 @@ import com.isft194.gestin.dtos.request.InscriptionPeriodRequest;
 import com.isft194.gestin.dtos.response.ExamResponse;
 import com.isft194.gestin.dtos.response.ExamsResponse;
 import com.isft194.gestin.dtos.response.InscriptionPeriodResponse;
+import com.isft194.gestin.interfaces.IMapper;
 import com.isft194.gestin.models.Exam;
 import com.isft194.gestin.models.InscriptionPeriod;
 import org.modelmapper.ModelMapper;
@@ -54,7 +55,7 @@ public class InscriptionPeriodMapper implements IMapper<InscriptionPeriod,Inscri
     }
 
     @Override
-    public InscriptionPeriod fromRequestToObj(InscriptionPeriodRequest request) throws Exception {
+    public InscriptionPeriod fromRequestToModel(InscriptionPeriodRequest request) throws Exception {
         InscriptionPeriod inscriptionPeriod = InscriptionPeriod.builder()
                 .startPeriod(request.getStartPeriod())
                 .endPeriod(request.getEndPeriod())

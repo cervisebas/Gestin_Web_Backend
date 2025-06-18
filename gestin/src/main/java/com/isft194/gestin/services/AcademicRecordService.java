@@ -56,7 +56,7 @@ public class AcademicRecordService extends ServiceIMPL<AcademicRecord, Long>{
 
     // Metodo que trae mapeado el modelo de AcademicRecord.
     private AcademicRecord mapAcademicRecordRequestToAcademicRecord(AcademicRecordRequest academicRecordRequest) throws Exception {
-        return academicRecordMapper.fromRequestToObj(academicRecordRequest);
+        return academicRecordMapper.fromRequestToModel(academicRecordRequest);
     }
     // Metodo para guardar el nuevo o actualizado AcademicRecord.
     private AcademicRecord saveAcademicRecord(AcademicRecord academicRecord){
@@ -75,7 +75,7 @@ public class AcademicRecordService extends ServiceIMPL<AcademicRecord, Long>{
 
     // Metodo que usa el mapper, envia el modelo de AcademicRecord y trae mapeado AcedemicRecordResponse.
     private AcademicRecordResponse toAcademicRecordResponse(AcademicRecord academicRecord){
-        return academicRecordMapper.fromObjToResponse(academicRecord);
+        return academicRecordMapper.fromModelToResponse(academicRecord);
     }
 
     // Metodo que mapea de un model a un response el AcademicRecord y los guarda en una lista.

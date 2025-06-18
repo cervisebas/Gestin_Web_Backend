@@ -6,6 +6,7 @@ import com.isft194.gestin.dtos.response.SubjectResponse;
 import com.isft194.gestin.dtos.response.SubjectsResponse;
 import com.isft194.gestin.dtos.response.UserNecessaryResponse;
 import com.isft194.gestin.dtos.response.UserResponse;
+import com.isft194.gestin.interfaces.IMapper;
 import com.isft194.gestin.models.Subject;
 import com.isft194.gestin.models.User;
 import com.isft194.gestin.services.UserService;
@@ -53,7 +54,7 @@ public class SubjectMapper implements IMapper<Subject,SubjectRequest,SubjectResp
     }
 
     @Override
-    public Subject fromRequestToObj(SubjectRequest request) throws Exception {
+    public Subject fromRequestToModel(SubjectRequest request) throws Exception {
         //Mapeo de subject
         Subject subject = modelMapper.map(request, Subject.class);
 
@@ -64,7 +65,7 @@ public class SubjectMapper implements IMapper<Subject,SubjectRequest,SubjectResp
     }
 
     @Override
-    public SubjectResponse fromObjToResponse(Subject subject) {
+    public SubjectResponse fromModelToResponse(Subject subject) {
         //mapeo subjectResponse
         SubjectResponse subjectResponse = modelMapper.map(subject, SubjectResponse.class);
 

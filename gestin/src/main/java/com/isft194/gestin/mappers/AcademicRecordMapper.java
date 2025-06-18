@@ -5,6 +5,7 @@ import com.isft194.gestin.dtos.response.AcademicRecordResponse;
 import com.isft194.gestin.dtos.response.SubjectResponse;
 import com.isft194.gestin.dtos.response.UserNecessaryResponse;
 import com.isft194.gestin.dtos.response.UserResponse;
+import com.isft194.gestin.interfaces.IMapper;
 import com.isft194.gestin.models.AcademicRecord;
 import com.isft194.gestin.models.Subject;
 import com.isft194.gestin.models.User;
@@ -45,7 +46,7 @@ public class AcademicRecordMapper implements IMapper<AcademicRecord,AcademicReco
 //    }
 
     @Override
-    public AcademicRecord fromRequestToObj(AcademicRecordRequest request) throws Exception {
+    public AcademicRecord fromRequestToModel(AcademicRecordRequest request) throws Exception {
         //mapeo el registro academico
         AcademicRecord academicRecord = modelMapper.map(request, AcademicRecord.class);
 
@@ -56,7 +57,7 @@ public class AcademicRecordMapper implements IMapper<AcademicRecord,AcademicReco
     }
 
     @Override
-    public AcademicRecordResponse fromObjToResponse(AcademicRecord academicRecord) {
+    public AcademicRecordResponse fromModelToResponse(AcademicRecord academicRecord) {
         //mapeo academicRecordResponse
         AcademicRecordResponse academicRecordResponse = modelMapper.map(academicRecord, AcademicRecordResponse.class);
 

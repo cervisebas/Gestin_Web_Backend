@@ -4,6 +4,7 @@ import com.isft194.gestin.dtos.request.ExamRequest;
 import com.isft194.gestin.dtos.response.ExamResponse;
 import com.isft194.gestin.dtos.response.SubjectResponse;
 import com.isft194.gestin.dtos.response.UserResponse;
+import com.isft194.gestin.interfaces.IMapper;
 import com.isft194.gestin.models.AcademicRecord;
 import com.isft194.gestin.models.Exam;
 import com.isft194.gestin.models.Subject;
@@ -54,7 +55,7 @@ public class ExamMapper implements IMapper<Exam,ExamRequest,ExamResponse>
     }
 
     @Override
-    public Exam fromRequestToObj(ExamRequest request) throws Exception {
+    public Exam fromRequestToModel(ExamRequest request) throws Exception {
         Exam exam = modelMapper.map(request, Exam.class);
 
         exam.setTeacher(modelMapper.map(request.getTeacher(), User.class));
@@ -67,7 +68,7 @@ public class ExamMapper implements IMapper<Exam,ExamRequest,ExamResponse>
     }
 
     @Override
-    public ExamResponse fromObjToResponse(Exam exam) {
+    public ExamResponse fromModelToResponse(Exam exam) {
         ExamResponse response = modelMapper.map(exam, ExamResponse.class);
 
 

@@ -1,25 +1,22 @@
 package com.isft194.gestin.dtos.request;
 
 import lombok.Data;
+import java.time.LocalDateTime;
 
-import java.util.Date;
+import com.isft194.gestin.enums.Gender;
 
 @Data
-public class UserRequest
-{
+public class UserRequest {
     private Long id;
-    //valor que se asocia al user de gestin
+    private String names;
+    private String lastNames;
+    private Integer dni;
+    private LocalDateTime birthdate;
+    private String phone;
     private Long gestinId;
-    private String type;
-    private String mail;
-    private String name;
-    private String lastName;
-    private String password;
-    private String identityDoc;
-    private Long phoneNumber;
-    private Long emergencyPhoneNumber;
-    private Date birthdate;
-    private String placeOfBirth;
-    private String gender;
-
+    private String email;
+    private String birthplace;
+    private Boolean isTeacher;
+    private Gender gender;
+    private String emergencyPhone;
 }
