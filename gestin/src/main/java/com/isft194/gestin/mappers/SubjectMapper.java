@@ -1,77 +1,45 @@
 package com.isft194.gestin.mappers;
 
 import com.isft194.gestin.dtos.request.SubjectRequest;
-import com.isft194.gestin.dtos.request.UserRequest;
 import com.isft194.gestin.dtos.response.SubjectResponse;
-import com.isft194.gestin.dtos.response.SubjectsResponse;
-import com.isft194.gestin.dtos.response.UserNecessaryResponse;
-import com.isft194.gestin.dtos.response.UserResponse;
+import com.isft194.gestin.interfaces.IArrayMapper;
 import com.isft194.gestin.interfaces.IMapper;
 import com.isft194.gestin.models.Subject;
-import com.isft194.gestin.models.User;
-import com.isft194.gestin.services.UserService;
+
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
-public class SubjectMapper implements IMapper<Subject,SubjectRequest,SubjectResponse>
-{
-
+public class SubjectMapper
+    implements
+        IMapper<Subject, SubjectRequest, SubjectResponse>,
+        IArrayMapper<Subject, SubjectRequest, SubjectResponse> {
+    
     @Autowired
     private ModelMapper modelMapper;
 
-    //@Autowired
-    //private UserMapper userMapper;
-
-    public Subject toSubject(SubjectRequest subjectRequest){
-        //Mapeo de subject
-        Subject subject = modelMapper.map(subjectRequest, Subject.class);
-
-        //ahora mapeo de teacher de tipo user, dentro de subject
-        subject.setTeacher(modelMapper.map(subjectRequest.getTeacher(), User.class));
-
-        return subject;
-    }
-
-    public SubjectResponse toSubjectResponse(Subject subject) {
-        //mapeo subjectResponse
-        SubjectResponse subjectResponse = modelMapper.map(subject, SubjectResponse.class);
-
-        //mapeo de teacherResponse de tipo UserResponse, dentro de SubjectResponse
-        subjectResponse.setTeacher(modelMapper.map(subject, UserNecessaryResponse.class));
-
-        return subjectResponse;
-    }
-
-    public Subject subjectResponseToSubject(SubjectResponse subjectResponse){
-        Subject subject = modelMapper.map(subjectResponse, Subject.class);
-        subject.setTeacher(modelMapper.map(subjectResponse, User.class));
-        return subject;
-    }
-
     @Override
-    public Subject fromRequestToModel(SubjectRequest request) throws Exception {
-        //Mapeo de subject
-        Subject subject = modelMapper.map(request, Subject.class);
-
-        //ahora mapeo de teacher de tipo user, dentro de subject
-        subject.setTeacher(modelMapper.map(request.getTeacher(), User.class));
-
-        return subject;
+    public Subject fromRequestToModel(SubjectRequest request) {
+        return modelMapper.map(request, Subject.class);
     }
 
     @Override
     public SubjectResponse fromModelToResponse(Subject subject) {
-        //mapeo subjectResponse
-        SubjectResponse subjectResponse = modelMapper.map(subject, SubjectResponse.class);
+        return modelMapper.map(subject, SubjectResponse.class);
+    }
 
-        //mapeo de teacherResponse de tipo UserResponse, dentro de SubjectResponse
-        subjectResponse.setTeacher(modelMapper.map(subject, UserNecessaryResponse.class));
 
-        return subjectResponse;
+    @Override
+    public List<Subject> fromRequestListToModelList(List<SubjectRequest> request) {
+        return modelMapper.map(request, new TypeToken<List<Subject>>() {}.getType());
+    }
+
+    @Override
+    public List<SubjectResponse> fromModelListToResponseList(List<Subject> model) {
+        return modelMapper.map(model, new TypeToken<List<Subject>>() {}.getType());
     }
 }

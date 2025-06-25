@@ -1,5 +1,6 @@
 package com.isft194.gestin.services;
 
+import com.isft194.gestin.exceptions.CareerNotFound;
 import com.isft194.gestin.exceptions.NotAuthenticatedException;
 import com.isft194.gestin.models.Career;
 import com.isft194.gestin.models.SubjectRegistrations;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CareerService {
@@ -40,6 +42,16 @@ public class CareerService {
         }
 
         return careers;
+    }
+
+    public Career getById(Long id) throws CareerNotFound {
+        Optional<Career> career = careerRepository.findById(id);
+
+        if (career.isEmpty()) {
+            throw new CareerNotFound("Carrera no encontrada.");
+        }
+
+        return career.get();
     }
 }
 
