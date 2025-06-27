@@ -21,33 +21,33 @@ public class ApplicationConfig {
   private IUserRepository userRepository;
 
   @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-      return config.getAuthenticationManager();
-    }
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+    return config.getAuthenticationManager();
+  }
 
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider= new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailService());
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        return authenticationProvider;
-    }
+  @Bean
+  public AuthenticationProvider authenticationProvider() {
+    DaoAuthenticationProvider authenticationProvider= new DaoAuthenticationProvider();
+    authenticationProvider.setUserDetailsService(userDetailService());
+    authenticationProvider.setPasswordEncoder(passwordEncoder());
+    return authenticationProvider;
+  }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-    @Bean
-    public UserDetailsService userDetailService() {
-        return username -> {
-            User user = userRepository.findByEmail(username);
-            
-            if (user == null) {
-              throw new UsernameNotFoundException("Nombre de usuario no encontrado");
-            }
+  @Bean
+  public UserDetailsService userDetailService() {
+    return username -> {
+      User user = userRepository.findByEmail(username);
+      
+      if (user == null) {
+        throw new UsernameNotFoundException("Nombre de usuario no encontrado");
+      }
 
-            return user;
-        };
-    }
+      return user;
+    };
+  }
 }

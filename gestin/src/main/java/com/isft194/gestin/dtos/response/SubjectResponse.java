@@ -3,9 +3,11 @@ package com.isft194.gestin.dtos.response;
 import com.isft194.gestin.models.Career;
 import com.isft194.gestin.models.User;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class SubjectResponse {
     private Long id;
     private String name;

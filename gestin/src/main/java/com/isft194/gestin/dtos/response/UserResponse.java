@@ -1,5 +1,6 @@
 package com.isft194.gestin.dtos.response;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -7,6 +8,7 @@ import java.time.LocalDateTime;
 import com.isft194.gestin.enums.Gender;
 
 @Data
+@Builder
 public class UserResponse {
     private Long id;
     private String names;

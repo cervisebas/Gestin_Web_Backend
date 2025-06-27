@@ -1,7 +1,9 @@
 package com.isft194.gestin.controllers;
 
-import com.isft194.gestin.dtos.request.LoginRequest;
+import com.isft194.gestin.dtos.request.AuthRequest;
 import com.isft194.gestin.services.AuthService;
+
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,8 +21,8 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    @PostMapping(value = "login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody @Valid AuthRequest request) {
         try {
             return ResponseEntity
                 .ok(authService.login(request));

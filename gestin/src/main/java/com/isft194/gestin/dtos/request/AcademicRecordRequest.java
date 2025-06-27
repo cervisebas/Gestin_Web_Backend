@@ -15,5 +15,4 @@ public class AcademicRecordRequest {
     private Integer grade;
     private String exam_record;
     private LocalDateTime accreditation_date;
-
 }

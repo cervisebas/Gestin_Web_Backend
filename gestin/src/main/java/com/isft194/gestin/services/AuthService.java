@@ -1,6 +1,6 @@
 package com.isft194.gestin.services;
 
-import com.isft194.gestin.dtos.request.LoginRequest;
+import com.isft194.gestin.dtos.request.AuthRequest;
 import com.isft194.gestin.dtos.response.AuthResponse;
 import com.isft194.gestin.exceptions.NotAuthenticatedException;
 import com.isft194.gestin.jwt.JwtService;
@@ -34,7 +34,7 @@ public class AuthService {
     private AuthenticationManager authenticationManager;
 
 
-    public AuthResponse login(LoginRequest request) throws BadCredentialsException {
+    public AuthResponse login(AuthRequest request) throws BadCredentialsException {
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                 request.getEmail(),

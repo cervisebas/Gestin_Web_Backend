@@ -2,6 +2,7 @@ package com.isft194.gestin.dtos.response;
 import lombok.*;
 
 @Data
+@Builder
 public class StudentResponse {
     private String nameStudent;
     private String lastNameStudent;
