@@ -40,6 +40,6 @@ public class SubjectMapper
 
     @Override
     public List<SubjectResponse> fromModelListToResponseList(List<Subject> model) {
-        return modelMapper.map(model, new TypeToken<List<Subject>>() {}.getType());
+        return modelMapper.map(model, new TypeToken<List<SubjectResponse>>() {}.getType());
     }
 }

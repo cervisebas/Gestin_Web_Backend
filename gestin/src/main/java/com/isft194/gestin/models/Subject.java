@@ -24,7 +24,7 @@ public class Subject {
 
     @ManyToOne()
     @JoinColumn(name = "id_carrer")
-    private Career carrer;
+    private Career career;
 
     @Column(name = "year_in_career")
     private Integer year_in_career;

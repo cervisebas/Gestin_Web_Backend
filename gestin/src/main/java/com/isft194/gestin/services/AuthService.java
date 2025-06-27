@@ -9,8 +9,7 @@ import com.isft194.gestin.models.UserSession;
 import com.isft194.gestin.repositories.IUserRepository;
 import com.isft194.gestin.repositories.IUserSessionRepository;
 
-import lombok.AllArgsConstructor;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -21,12 +20,19 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-@AllArgsConstructor
 public class AuthService {
-    private final IUserRepository userRepository;
-    private final IUserSessionRepository userSessionRepository;
-    private final JwtService jwtService;
-    private final AuthenticationManager authenticationManager;
+    @Autowired
+    private IUserRepository userRepository;
+
+    @Autowired
+    private IUserSessionRepository userSessionRepository;
+
+    @Autowired
+    private JwtService jwtService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
 
     public AuthResponse login(LoginRequest request) throws BadCredentialsException {
         authenticationManager.authenticate(

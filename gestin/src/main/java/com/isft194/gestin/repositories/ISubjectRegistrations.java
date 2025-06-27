@@ -9,5 +9,5 @@ import com.isft194.gestin.models.User;
 
 @Repository
 public interface ISubjectRegistrations extends IRepository<SubjectRegistrations, Long> {
-  List<SubjectRegistrations> findAllByUser(User user);
+  List<SubjectRegistrations> findAllByStudent(User student);
 }

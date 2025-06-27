@@ -22,12 +22,13 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    @Autowired
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    //private final AuthenticationProvider authProvider;
+    @Autowired
+    private AuthenticationProvider authProvider;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -36,14 +37,14 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Configura CORS desde el método separado
             .authorizeHttpRequests(authRequest ->
                 authRequest
-                    .anyRequest().authenticated()
                     .requestMatchers("/auth/**").permitAll()
+                    .anyRequest().authenticated()
             )
             .sessionManagement(sessionManager ->
                 sessionManager
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-            //.authenticationProvider(authProvider)
+            .authenticationProvider(authProvider)
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
             .build();
     }

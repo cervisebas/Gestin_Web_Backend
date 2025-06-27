@@ -29,12 +29,12 @@ public class CareerService {
 
     public List<Career> getAllByUser() throws NotAuthenticatedException {
         User currentUser = userService.getCurrent();
-        List<SubjectRegistrations> subjects = subjectRegistrationsRespository.findAllByUser(currentUser);
+        List<SubjectRegistrations> subjects = subjectRegistrationsRespository.findAllByStudent(currentUser);
 
         List<Career> careers = new ArrayList<Career>();
 
         for (SubjectRegistrations subject : subjects) {
-            Career career = subject.getSubject().getCarrer();
+            Career career = subject.getSubject().getCareer();
 
             if (!careers.contains(career)) {
                 careers.add(career);

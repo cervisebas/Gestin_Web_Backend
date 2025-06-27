@@ -5,17 +5,14 @@ import lombok.*;
 
 
 import java.time.LocalDateTime;
-import java.util.Date;
+
+import com.isft194.gestin.models.Subject;
+import com.isft194.gestin.models.User;
 
 @Data
 public class ExamRequest {
-
     private Long id;
-    private Date examDate;
-    private LocalDateTime examTime;
-    private UserRequest teacher;
-    private UserRequest firstVocal;
-    private UserRequest secondVocal;
-    private UserRequest thirdVocal;
-    private SubjectRequest subject;
+    private LocalDateTime date;
+    private User teacher;
+    private Subject subject;
 }

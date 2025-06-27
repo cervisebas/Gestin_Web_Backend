@@ -19,11 +19,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SubjectRegistrations {
   @Id
+  private Long id;
+
   @ManyToOne
   @JoinColumn(name = "id_subject")
   private Subject subject;
   
-  @Id
   @ManyToOne
   @JoinColumn(name = "id_student")
   private User student;
