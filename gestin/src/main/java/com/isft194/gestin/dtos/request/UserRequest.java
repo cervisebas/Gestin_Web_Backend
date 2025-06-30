@@ -8,6 +8,7 @@ import com.isft194.gestin.enums.Gender;
 @Data
 public class UserRequest {
     private Long id;
+    
     private String names;
     private String lastNames;
     private Integer dni;
@@ -18,5 +19,6 @@ public class UserRequest {
     private String birthplace;
     private Boolean isTeacher;
     private Gender gender;
+    private String password;
     private String emergencyPhone;
 }

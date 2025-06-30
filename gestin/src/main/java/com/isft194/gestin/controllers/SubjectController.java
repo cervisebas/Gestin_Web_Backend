@@ -1,5 +1,5 @@
 package com.isft194.gestin.controllers;
-import com.isft194.gestin.exceptions.CareerNotFound;
+import com.isft194.gestin.exceptions.CareerNotFoundException;
 import com.isft194.gestin.exceptions.NotAuthenticatedException;
 import com.isft194.gestin.mappers.SubjectMapper;
 import com.isft194.gestin.models.Subject;
@@ -41,7 +41,7 @@ public class SubjectController {
             return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
                 .body(e.getMessage());
-        } catch (CareerNotFound e) {
+        } catch (CareerNotFoundException e) {
             return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(e.getMessage());

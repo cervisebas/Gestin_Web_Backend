@@ -3,11 +3,17 @@ package com.isft194.gestin.services;
 import com.isft194.gestin.dtos.request.AuthRequest;
 import com.isft194.gestin.dtos.response.AuthResponse;
 import com.isft194.gestin.exceptions.NotAuthenticatedException;
-import com.isft194.gestin.jwt.JwtService;
+import com.isft194.gestin.exceptions.UserNotFoundException;
+import com.isft194.gestin.interfaces.IAuthenticationFacade;
+import com.isft194.gestin.jwt.CustomUserDetails;
+import com.isft194.gestin.jwt.JwtUtil;
 import com.isft194.gestin.models.User;
 import com.isft194.gestin.models.UserSession;
 import com.isft194.gestin.repositories.IUserRepository;
 import com.isft194.gestin.repositories.IUserSessionRepository;
+import com.isft194.gestin.security.AuthenticationFacade;
+
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -28,13 +34,16 @@ public class AuthService {
     private IUserSessionRepository userSessionRepository;
 
     @Autowired
-    private JwtService jwtService;
+    private JwtUtil jwtUtil;
+
+    @Autowired
+    private  AuthenticationFacade facade;
 
     @Autowired
     private AuthenticationManager authenticationManager;
 
 
-    public AuthResponse login(AuthRequest request) throws BadCredentialsException {
+    public AuthResponse login(AuthRequest request) throws BadCredentialsException, UserNotFoundException {
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                 request.getEmail(),
@@ -42,11 +51,16 @@ public class AuthService {
             )
         );
         
-        User user = userRepository.findByEmail(request.getEmail());
-        String token = jwtService.getToken(user);
+        Optional<User> user = userRepository.findByEmail(request.getEmail());
+
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("Usuario no encontrado.");
+        }
+
+        String token = jwtUtil.generateToken(user.get());
 
         UserSession session = new UserSession();
-        session.setUser(user);
+        session.setUser(user.get());
         session.setToken(token);
         userSessionRepository.save(session);
 
@@ -56,13 +70,15 @@ public class AuthService {
     }
 
     public User getCurrentSession() throws NotAuthenticatedException {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails customUserDetails = (CustomUserDetails) facade.getAuthentication().getPrincipal();
 
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            return (User) authentication.getPrincipal();
+        Optional<User> user = userRepository.findByEmail(customUserDetails.getUsername());
+
+        if (user.isEmpty()) {
+            throw new NotAuthenticatedException("Acceso denegado.");
         }
-
-        throw new NotAuthenticatedException("Acceso denegado.");
+        
+        return user.get();
     }
 
 }

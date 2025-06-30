@@ -3,6 +3,8 @@ import lombok.*;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class StudentResponse {
     private String nameStudent;
     private String lastNameStudent;

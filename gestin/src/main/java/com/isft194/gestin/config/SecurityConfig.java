@@ -1,6 +1,5 @@
 package com.isft194.gestin.config;
 
-import com.isft194.gestin.jwt.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +13,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import com.isft194.gestin.jwt.JwtAuthenticationFilter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -59,4 +60,5 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration); // Aplica a todos los endpoints
         return source;
     }
+
 }

@@ -1,6 +1,7 @@
 package com.isft194.gestin.controllers;
 
 import com.isft194.gestin.dtos.request.AuthRequest;
+import com.isft194.gestin.exceptions.UserNotFoundException;
 import com.isft194.gestin.services.AuthService;
 
 import jakarta.validation.Valid;
@@ -31,6 +32,10 @@ public class AuthController {
             return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
                 .body("Correo o contraseña incorrectos, por favor revise sus credenciales.");
+        } catch (UserNotFoundException e) {
+            return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(e.getMessage());
         }
     }
 }

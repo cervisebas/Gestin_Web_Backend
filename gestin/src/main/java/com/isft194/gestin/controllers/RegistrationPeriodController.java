@@ -27,7 +27,7 @@ public class RegistrationPeriodController {
   @Autowired
   private RegistrationPeriodMapper registrationPeriodMapper;
 
-  @GetMapping("/")
+  @GetMapping("")
   public ResponseEntity<?> getPeriods() {
     try {
       userService.getCurrent();

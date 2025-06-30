@@ -7,18 +7,15 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.isft194.gestin.models.User;
-import com.isft194.gestin.repositories.IUserRepository;
+import com.isft194.gestin.services.CustomUserDetailsService;
 
 @Configuration
 public class ApplicationConfig {
   @Autowired
-  private IUserRepository userRepository;
+  private CustomUserDetailsService customUserDetailsService;
 
   @Bean
   public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
@@ -28,7 +25,7 @@ public class ApplicationConfig {
   @Bean
   public AuthenticationProvider authenticationProvider() {
     DaoAuthenticationProvider authenticationProvider= new DaoAuthenticationProvider();
-    authenticationProvider.setUserDetailsService(userDetailService());
+    authenticationProvider.setUserDetailsService(customUserDetailsService);
     authenticationProvider.setPasswordEncoder(passwordEncoder());
     return authenticationProvider;
   }
@@ -38,16 +35,4 @@ public class ApplicationConfig {
     return new BCryptPasswordEncoder();
   }
 
-  @Bean
-  public UserDetailsService userDetailService() {
-    return username -> {
-      User user = userRepository.findByEmail(username);
-      
-      if (user == null) {
-        throw new UsernameNotFoundException("Nombre de usuario no encontrado");
-      }
-
-      return user;
-    };
-  }
 }

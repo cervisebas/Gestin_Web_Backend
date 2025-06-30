@@ -21,7 +21,7 @@ public class CareerController {
     @Autowired
     private CareerMapper careerMapper;
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<?> getAllByCurrentUser() {
         try {
             List<Career> careers = careerService.getAllByUser();

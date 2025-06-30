@@ -1,6 +1,6 @@
 package com.isft194.gestin.services;
 
-import com.isft194.gestin.exceptions.CareerNotFound;
+import com.isft194.gestin.exceptions.CareerNotFoundException;
 import com.isft194.gestin.exceptions.NotAuthenticatedException;
 import com.isft194.gestin.models.Career;
 import com.isft194.gestin.models.SubjectRegistrations;
@@ -44,11 +44,11 @@ public class CareerService {
         return careers;
     }
 
-    public Career getById(Long id) throws CareerNotFound {
+    public Career getById(Long id) throws CareerNotFoundException {
         Optional<Career> career = careerRepository.findById(id);
 
         if (career.isEmpty()) {
-            throw new CareerNotFound("Carrera no encontrada.");
+            throw new CareerNotFoundException("Carrera no encontrada.");
         }
 
         return career.get();
