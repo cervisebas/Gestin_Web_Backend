@@ -2,7 +2,6 @@ package com.isft194.gestin.services;
 
 import com.isft194.gestin.dtos.request.UserRequest;
 import com.isft194.gestin.exceptions.NotAuthenticatedException;
-import com.isft194.gestin.interfaces.IAuthenticationFacade;
 import com.isft194.gestin.models.User;
 import com.isft194.gestin.repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
