@@ -1,43 +1,84 @@
 package com.isft194.gestin.services;
 
-import com.isft194.gestin.dtos.request.LoginRequest;
+import com.isft194.gestin.dtos.request.AuthRequest;
 import com.isft194.gestin.dtos.response.AuthResponse;
-import com.isft194.gestin.jwt.JwtService;
+import com.isft194.gestin.exceptions.NotAuthenticatedException;
+import com.isft194.gestin.exceptions.UserNotFoundException;
+import com.isft194.gestin.interfaces.IAuthenticationFacade;
+import com.isft194.gestin.jwt.CustomUserDetails;
+import com.isft194.gestin.jwt.JwtUtil;
 import com.isft194.gestin.models.User;
+import com.isft194.gestin.models.UserSession;
 import com.isft194.gestin.repositories.IUserRepository;
-import lombok.AllArgsConstructor;
+import com.isft194.gestin.repositories.IUserSessionRepository;
+import com.isft194.gestin.security.AuthenticationFacade;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 
 @Service
-@AllArgsConstructor
 public class AuthService {
-    private final IUserRepository userRepository;
-    private final JwtService jwtService;
-    private final AuthenticationManager authenticationManager;
+    @Autowired
+    private IUserRepository userRepository;
 
-    public AuthResponse login(LoginRequest request) {
-        // Autenticamos al usuario utilizando el AuthenticationManager.
+    @Autowired
+    private IUserSessionRepository userSessionRepository;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @Autowired
+    private  AuthenticationFacade facade;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+
+    public AuthResponse login(AuthRequest request) throws BadCredentialsException, UserNotFoundException {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getMail(), request.getPassword())
+            new UsernamePasswordAuthenticationToken(
+                request.getEmail(),
+                request.getPassword()
+            )
         );
+        
+        Optional<User> user = userRepository.findByEmail(request.getEmail());
 
-        // Recuperamos el usuario a partir de su correo.
-        User user = userRepository.findByMail(request.getMail());
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
+        if (user.isEmpty()) {
+            throw new UserNotFoundException("Usuario no encontrado.");
         }
 
-        // Generamos el token con el UserDetails.
-        String token = jwtService.getToken(user);
+        String token = jwtUtil.generateToken(user.get());
 
-        // Retornamos la respuesta de autenticación.
+        UserSession session = new UserSession();
+        session.setUser(user.get());
+        session.setToken(token);
+        userSessionRepository.save(session);
+
         return AuthResponse.builder()
-                .token(token)
-                .build();
+            .token(token)
+            .build();
+    }
+
+    public User getCurrentSession() throws NotAuthenticatedException {
+        CustomUserDetails customUserDetails = (CustomUserDetails) facade.getAuthentication().getPrincipal();
+
+        Optional<User> user = userRepository.findByEmail(customUserDetails.getUsername());
+
+        if (user.isEmpty()) {
+            throw new NotAuthenticatedException("Acceso denegado.");
+        }
+        
+        return user.get();
     }
 
 }

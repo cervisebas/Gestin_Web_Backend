@@ -1,13 +1,22 @@
 package com.isft194.gestin.dtos.response;
 
+import java.time.LocalDateTime;
+
+import com.isft194.gestin.models.Subject;
+import com.isft194.gestin.models.User;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class AcademicRecordResponse {
-
     private Long id;
-    private Integer note;
-    private UserNecessaryResponse student;
-    private SubjectResponse subject;
-
+    private User student;
+    private Subject subject;
+    private Integer grade;
+    private String exam_record;
+    private LocalDateTime accreditation_date;
 }

@@ -1,17 +1,18 @@
 package com.isft194.gestin.dtos.request;
 
+import java.time.LocalDateTime;
+
+import com.isft194.gestin.models.Subject;
+import com.isft194.gestin.models.User;
+
 import lombok.Data;
 
 @Data
 public class AcademicRecordRequest {
-
     private Long id;
-    private Integer note;
-    private Long finalGrade;
-    private Long firstQuarterGrade;
-    private Long secondQuarterGrade;
-    private Boolean passed;
-    private UserRequest userRequestId;
-    private SubjectRequest subjectRequestId;
-
+    private User student;
+    private Subject subject;
+    private Integer grade;
+    private String exam_record;
+    private LocalDateTime accreditation_date;
 }

@@ -11,8 +11,11 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableAutoConfiguration
 @ComponentScan
 @EnableConfigurationProperties
-@EntityScan(basePackages = {"com.isft194.gestin.models"})public class GestinApplication {
+@EntityScan(basePackages = {"com.isft194.gestin.models"})
+public class GestinApplication {
 
-	public static void main(String[] args) {SpringApplication.run(GestinApplication.class, args);}
+	public static void main(String[] args) {
+		SpringApplication.run(GestinApplication.class, args);
+	}
 
 }

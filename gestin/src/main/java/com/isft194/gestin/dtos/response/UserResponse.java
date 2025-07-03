@@ -1,24 +1,29 @@
 package com.isft194.gestin.dtos.response;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
+import com.isft194.gestin.enums.Gender;
 
 @Data
-public class UserResponse
-{
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserResponse {
     private Long id;
-    //valor que se asocia al user de gestin
+    private String names;
+    private String lastNames;
+    private Integer dni;
+    private LocalDateTime birthdate;
+    private String phone;
     private Long gestinId;
-    private String type;
-    private String mail;
-    private String name;
-    private String lastName;
-    private String password;
-    private String identityDoc;
-    private Long phoneNumber;
-    private Long emergencyPhoneNumber;
-    private Date birthdate;
-    private String placeOfBirth;
-    private String gender;
+    private String email;
+    private String birthplace;
+    private Boolean isTeacher;
+    private Gender gender;
+    private String emergencyPhone;
 }
